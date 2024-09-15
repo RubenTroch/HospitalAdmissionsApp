@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace HospitalAdmissionsApp.Infrastructure.Persistence.DataEntities;
 
 public class Injury {
-    public Guid IncidentId { get; set;}
+    public Guid InjuryId { get; set;}
     public bool AlcoholInvolvement  {get; set;}
     public bool DrugInvolvement  {get; set;}
     public string Narrative { get; set; } = string.Empty;

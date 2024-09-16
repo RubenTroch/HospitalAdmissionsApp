@@ -11,12 +11,15 @@ public class EmergencyVisit {
 
     [ForeignKey("Injury")]
     public Guid InjuryId { get; set; }
+    public virtual Injury? Injury { get; set; }
 
     [ForeignKey("Hospital")]
     public Guid HospitalId { get; set; }
+    public virtual Hospital? Hospital { get; set; }
 
     [ForeignKey("EmergencyVisitEnding")]
     public Guid EmergencyVisitEndingId { get; set; }
+    public virtual EmergencyVisitEnding? EmergencyVisitEnding { get; set; }
 
-    List<Diagnosis> Diagnoses { get; set; } = new();
+    public virtual List<Diagnosis> Diagnoses { get; set; } = new();
 }

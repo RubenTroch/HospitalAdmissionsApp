@@ -10,5 +10,6 @@ public class Person {
     public int Sex { get; set;}
     public float Weight { get; set;}
 
-    public List<Ethnicity> Ethnicities { get; set; } = new();
+    public virtual List<Ethnicity> Ethnicities { get; set; } = new();
+    public virtual List<Injury> Injuries { get; set; } = new();
 }

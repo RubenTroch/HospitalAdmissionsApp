@@ -8,7 +8,15 @@ public class Diagnosis {
     
     [ForeignKey("BodyPart")]
     public Guid BodyPartId { get; set; }
+    public virtual BodyPart? BodyPart { get; set; }
+
 
     [ForeignKey("DiagnosisName")]
-    public string DiagnosisNameId { get; set; } = string.Empty;
+    public Guid DiagnosisNameId { get; set; }
+    public virtual DiagnosisName? DiagnosisName { get; set; }
+
+
+    [ForeignKey("EmergencyVisit")]
+    public Guid EmergencyVisitId { get; set; }
+    public virtual EmergencyVisit? EmergencyVisit { get; set; }
 }

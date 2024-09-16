@@ -13,12 +13,18 @@ public class Injury {
 
     [ForeignKey("Person")]
     public Guid PersonId { get; set; }
+    public virtual Person? Person { get; set; }
 
     [ForeignKey("FireInvolvementLevel")]
     public Guid FireInvolvementLevelId { get; set; }
+    public virtual FireInvolvementLevel? FireInvolvementLevel { get; set; }
 
     [ForeignKey("Location")]
     public Guid LocationId { get; set; }
+    public virtual Location? Location { get; set;}
 
-    public List<Product> ProductsInvolved { get; set; } = new();
+    [ForeignKey("EmergencyVisit")]
+    public Guid EmergencyVisitId { get; set; }
+
+    public virtual List<Product> ProductsInvolved { get; set; } = new();
 }

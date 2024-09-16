@@ -4,6 +4,7 @@ using HospitalAdmissionsApp.Infrastructure.Persistence.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospitalAdmissionsApp.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(HospitalAdmissionsDbContext))]
-    partial class HospitalAdmissionsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240915201443_AddRelationshipsV1")]
+    partial class AddRelationshipsV1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,25 +25,13 @@ namespace HospitalAdmissionsApp.Infrastructure.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("EthnicityPerson", b =>
-                {
-                    b.Property<Guid>("EthnicitiesEthnicityId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("PeoplePersonId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("EthnicitiesEthnicityId", "PeoplePersonId");
-
-                    b.HasIndex("PeoplePersonId");
-
-                    b.ToTable("EthnicityPerson");
-                });
-
             modelBuilder.Entity("HospitalAdmissionsApp.Infrastructure.Persistence.DataEntities.BodyPart", b =>
                 {
                     b.Property<Guid>("BodyPartId")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("DiagnosisId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -72,12 +63,6 @@ namespace HospitalAdmissionsApp.Infrastructure.Persistence.Migrations
 
                     b.HasKey("DiagnosisId");
 
-                    b.HasIndex("BodyPartId");
-
-                    b.HasIndex("DiagnosisNameId");
-
-                    b.HasIndex("EmergencyVisitId");
-
                     b.ToTable("Diagnoses");
                 });
 
@@ -85,6 +70,9 @@ namespace HospitalAdmissionsApp.Infrastructure.Persistence.Migrations
                 {
                     b.Property<Guid>("DiagnosisNameId")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("DiagnosisId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -123,12 +111,6 @@ namespace HospitalAdmissionsApp.Infrastructure.Persistence.Migrations
 
                     b.HasKey("EmergencyVisitId");
 
-                    b.HasIndex("EmergencyVisitEndingId");
-
-                    b.HasIndex("HospitalId");
-
-                    b.HasIndex("InjuryId");
-
                     b.ToTable("EmergencyVisits");
                 });
 
@@ -136,6 +118,9 @@ namespace HospitalAdmissionsApp.Infrastructure.Persistence.Migrations
                 {
                     b.Property<Guid>("EmergencyVisitEndingId")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("EmergencyVisitId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -149,7 +134,7 @@ namespace HospitalAdmissionsApp.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("HospitalAdmissionsApp.Infrastructure.Persistence.DataEntities.Ethnicity", b =>
                 {
-                    b.Property<Guid>("EthnicityId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
@@ -160,7 +145,12 @@ namespace HospitalAdmissionsApp.Infrastructure.Persistence.Migrations
                     b.Property<int>("NeissCode")
                         .HasColumnType("int");
 
-                    b.HasKey("EthnicityId");
+                    b.Property<Guid?>("PersonId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonId");
 
                     b.ToTable("Ethnicities");
                 });
@@ -198,8 +188,6 @@ namespace HospitalAdmissionsApp.Infrastructure.Persistence.Migrations
 
                     b.HasKey("HospitalId");
 
-                    b.HasIndex("HospitalStratumId");
-
                     b.ToTable("Hospitals");
                 });
 
@@ -218,8 +206,6 @@ namespace HospitalAdmissionsApp.Infrastructure.Persistence.Migrations
 
                     b.HasKey("HospitalAdmissionId");
 
-                    b.HasIndex("HospitalId");
-
                     b.ToTable("HospitalAdmissions");
                 });
 
@@ -227,6 +213,9 @@ namespace HospitalAdmissionsApp.Infrastructure.Persistence.Migrations
                 {
                     b.Property<Guid>("HospitalStratumId")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("HospitalId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -270,10 +259,6 @@ namespace HospitalAdmissionsApp.Infrastructure.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("InjuryId");
-
-                    b.HasIndex("FireInvolvementLevelId");
-
-                    b.HasIndex("LocationId");
 
                     b.HasIndex("PersonId");
 
@@ -328,6 +313,9 @@ namespace HospitalAdmissionsApp.Infrastructure.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("InjuryId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -337,171 +325,43 @@ namespace HospitalAdmissionsApp.Infrastructure.Persistence.Migrations
 
                     b.HasKey("ProductId");
 
+                    b.HasIndex("InjuryId");
+
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("InjuryProduct", b =>
+            modelBuilder.Entity("HospitalAdmissionsApp.Infrastructure.Persistence.DataEntities.Ethnicity", b =>
                 {
-                    b.Property<Guid>("InjuriesInjuryId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ProductsInvolvedProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("InjuriesInjuryId", "ProductsInvolvedProductId");
-
-                    b.HasIndex("ProductsInvolvedProductId");
-
-                    b.ToTable("InjuryProduct");
-                });
-
-            modelBuilder.Entity("EthnicityPerson", b =>
-                {
-                    b.HasOne("HospitalAdmissionsApp.Infrastructure.Persistence.DataEntities.Ethnicity", null)
-                        .WithMany()
-                        .HasForeignKey("EthnicitiesEthnicityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("HospitalAdmissionsApp.Infrastructure.Persistence.DataEntities.Person", null)
-                        .WithMany()
-                        .HasForeignKey("PeoplePersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("HospitalAdmissionsApp.Infrastructure.Persistence.DataEntities.Diagnosis", b =>
-                {
-                    b.HasOne("HospitalAdmissionsApp.Infrastructure.Persistence.DataEntities.BodyPart", "BodyPart")
-                        .WithMany()
-                        .HasForeignKey("BodyPartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HospitalAdmissionsApp.Infrastructure.Persistence.DataEntities.DiagnosisName", "DiagnosisName")
-                        .WithMany()
-                        .HasForeignKey("DiagnosisNameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HospitalAdmissionsApp.Infrastructure.Persistence.DataEntities.EmergencyVisit", "EmergencyVisit")
-                        .WithMany("Diagnoses")
-                        .HasForeignKey("EmergencyVisitId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("BodyPart");
-
-                    b.Navigation("DiagnosisName");
-
-                    b.Navigation("EmergencyVisit");
-                });
-
-            modelBuilder.Entity("HospitalAdmissionsApp.Infrastructure.Persistence.DataEntities.EmergencyVisit", b =>
-                {
-                    b.HasOne("HospitalAdmissionsApp.Infrastructure.Persistence.DataEntities.EmergencyVisitEnding", "EmergencyVisitEnding")
-                        .WithMany()
-                        .HasForeignKey("EmergencyVisitEndingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HospitalAdmissionsApp.Infrastructure.Persistence.DataEntities.Hospital", "Hospital")
-                        .WithMany("EmergencyVisits")
-                        .HasForeignKey("HospitalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HospitalAdmissionsApp.Infrastructure.Persistence.DataEntities.Injury", "Injury")
-                        .WithMany()
-                        .HasForeignKey("InjuryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("EmergencyVisitEnding");
-
-                    b.Navigation("Hospital");
-
-                    b.Navigation("Injury");
-                });
-
-            modelBuilder.Entity("HospitalAdmissionsApp.Infrastructure.Persistence.DataEntities.Hospital", b =>
-                {
-                    b.HasOne("HospitalAdmissionsApp.Infrastructure.Persistence.DataEntities.HospitalStratum", "HospitalStratum")
-                        .WithMany()
-                        .HasForeignKey("HospitalStratumId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("HospitalStratum");
-                });
-
-            modelBuilder.Entity("HospitalAdmissionsApp.Infrastructure.Persistence.DataEntities.HospitalAdmission", b =>
-                {
-                    b.HasOne("HospitalAdmissionsApp.Infrastructure.Persistence.DataEntities.Hospital", "Hospital")
-                        .WithMany("HospitalAdmissions")
-                        .HasForeignKey("HospitalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Hospital");
+                        .WithMany("Ethnicities")
+                        .HasForeignKey("PersonId");
                 });
 
             modelBuilder.Entity("HospitalAdmissionsApp.Infrastructure.Persistence.DataEntities.Injury", b =>
                 {
-                    b.HasOne("HospitalAdmissionsApp.Infrastructure.Persistence.DataEntities.FireInvolvementLevel", "FireInvolvementLevel")
-                        .WithMany()
-                        .HasForeignKey("FireInvolvementLevelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HospitalAdmissionsApp.Infrastructure.Persistence.DataEntities.Location", "Location")
-                        .WithMany()
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HospitalAdmissionsApp.Infrastructure.Persistence.DataEntities.Person", "Person")
+                    b.HasOne("HospitalAdmissionsApp.Infrastructure.Persistence.DataEntities.Person", null)
                         .WithMany("Injuries")
                         .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("FireInvolvementLevel");
-
-                    b.Navigation("Location");
-
-                    b.Navigation("Person");
                 });
 
-            modelBuilder.Entity("InjuryProduct", b =>
+            modelBuilder.Entity("HospitalAdmissionsApp.Infrastructure.Persistence.DataEntities.Product", b =>
                 {
                     b.HasOne("HospitalAdmissionsApp.Infrastructure.Persistence.DataEntities.Injury", null)
-                        .WithMany()
-                        .HasForeignKey("InjuriesInjuryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HospitalAdmissionsApp.Infrastructure.Persistence.DataEntities.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsInvolvedProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("ProductsInvolved")
+                        .HasForeignKey("InjuryId");
                 });
 
-            modelBuilder.Entity("HospitalAdmissionsApp.Infrastructure.Persistence.DataEntities.EmergencyVisit", b =>
+            modelBuilder.Entity("HospitalAdmissionsApp.Infrastructure.Persistence.DataEntities.Injury", b =>
                 {
-                    b.Navigation("Diagnoses");
-                });
-
-            modelBuilder.Entity("HospitalAdmissionsApp.Infrastructure.Persistence.DataEntities.Hospital", b =>
-                {
-                    b.Navigation("EmergencyVisits");
-
-                    b.Navigation("HospitalAdmissions");
+                    b.Navigation("ProductsInvolved");
                 });
 
             modelBuilder.Entity("HospitalAdmissionsApp.Infrastructure.Persistence.DataEntities.Person", b =>
                 {
+                    b.Navigation("Ethnicities");
+
                     b.Navigation("Injuries");
                 });
 #pragma warning restore 612, 618

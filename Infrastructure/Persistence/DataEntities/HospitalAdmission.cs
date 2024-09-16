@@ -9,4 +9,5 @@ public class HospitalAdmission {
 
     [ForeignKey("Hospital")]
     public Guid HospitalId { get; set; }
+    public virtual Hospital? Hospital { get; set;}
 }

@@ -1,7 +1,6 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using Microsoft.Extensions.Logging;
 
 namespace HospitalAdmissionsApp.Presentation.Pages;
 

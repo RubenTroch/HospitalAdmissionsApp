@@ -1,6 +1,7 @@
 <Page x:Class="HospitalAdmissionsApp.Presentation.Pages.PatientProfile"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:components="clr-namespace:HospitalAdmissionsApp.Presentation.Components">
       
       <Grid Margin="40 60">
             <Grid.RowDefinitions>
@@ -13,7 +14,7 @@
                   <ColumnDefinition Width="1.5*" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="Patient" Grid.Row="0" Grid.Column="1" FontWeight="Bold" FontSize="36" />
+            <components:Title Text="Patient" Grid.Row="0" Grid.Column="1" />
             
             <StackPanel Grid.Row="1" Grid.Column="1">
                   <Label Content="Name" />

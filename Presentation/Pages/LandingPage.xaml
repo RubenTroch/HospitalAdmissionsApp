@@ -1,0 +1,22 @@
+<Page x:Class="HospitalAdmissionsApp.Presentation.Pages.LandingPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*" />
+            <RowDefinition Height="*" MinHeight="60" />
+            <RowDefinition Height="5*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" MinWidth="120" />
+            <ColumnDefinition Width="*" MinWidth="120" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Button Content="New Patient" Grid.Row="1" Grid.Column="2" Margin="4" Click="OnNewPatientButtonClicked" ></Button>
+        <Button Content="Returning Patient" Grid.Row="1" Grid.Column="3" Margin="4" Click="OnReturningPatientButtonClicked" ></Button>
+    </Grid>
+</Page>

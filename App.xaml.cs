@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using HospitalAdmissionsApp.Presentation.Forms;
+using HospitalAdmissionsApp.Presentation.Windows;
 
 namespace HospitalAdmissionsApp;
 public partial class App : Application
